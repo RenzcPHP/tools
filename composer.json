@@ -1,0 +1,21 @@
+{
+    "name": "burning/tools",
+    "description": "common tools class",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Burning\\Tools\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "renzhicai",
+            "email": "renzhicai@yibaicloud.com"
+        }
+    ],
+    "require": {},
+    "suggest": {
+        "ext-xhprof": "XHprof is required for some features of this package"
+    }
+}
