@@ -32,6 +32,11 @@ class XhprofService
      * @var string
      */
     private static $suffixXhprofFileName = '';
+    /**
+     * 分析结束结果集
+     * @var array
+     */
+    private static $xhprofResultData = [];
 
     /**
      * 设置是否开启性能分析
@@ -75,7 +80,7 @@ class XhprofService
             return false;
         }
 
-        $data = xhprof_disable();
+        static::$xhprofResultData = xhprof_disable();
 
         // 获取保存文件名
         $xhprofFilename = self::generateXhprofFileName();
@@ -86,8 +91,8 @@ class XhprofService
             include_once $_SERVER['XHPROF_ROOT_PATH'] . "xhprof_lib/utils/xhprof_runs.php";
             $x = new \XHProfRuns_Default();
 
-            //print_r($data);die;//此处的打印数据看起来非常不直观，所以需要安装yum install graphviz 图形化界面显示,更直观
-            $x->save_run($data, $xhprofFilename);
+            //print_r(static::$xhprofResultData);die;//此处的打印数据看起来非常不直观，所以需要安装yum install graphviz 图形化界面显示,更直观
+            $x->save_run(static::$xhprofResultData, $xhprofFilename);
         }
     }
 
@@ -109,9 +114,9 @@ class XhprofService
         }
 
         // 微秒
-        $xhprofWaitTimeMs = isset($data['main()']['wt'])?$data['main()']['wt']:0;
+        $xhprofWaitTimeMs = isset(static::$xhprofResultData['main()']['wt'])?static::$xhprofResultData['main()']['wt']:0;
         // 占用内存 bytes
-        $xhprofMemoryUsageBytes = isset($data['main()']['mu'])?$data['main()']['mu']:0;
+        $xhprofMemoryUsageBytes = isset(static::$xhprofResultData['main()']['mu'])?static::$xhprofResultData['main()']['mu']:0;
         $xhprofMemoryUsageMB = round($xhprofMemoryUsageBytes/1024/1024);
         // 秒
         static::$xhprofWaitTimeSecond = round($xhprofWaitTimeMs/1000/1000);
