@@ -84,7 +84,7 @@ class XhprofService
         if (static::$xhprofWaitTimeSecond >= static::$recordMinAccessTimeSecond){
             include_once $_SERVER['XHPROF_ROOT_PATH'] . "xhprof_lib/utils/xhprof_lib.php";
             include_once $_SERVER['XHPROF_ROOT_PATH'] . "xhprof_lib/utils/xhprof_runs.php";
-            $x = new XHProfRuns_Default();
+            $x = new \XHProfRuns_Default();
 
             //print_r($data);die;//此处的打印数据看起来非常不直观，所以需要安装yum install graphviz 图形化界面显示,更直观
             $x->save_run($data, $xhprofFilename);
